@@ -1,15 +1,17 @@
 import { makeRequest } from "./makeRequest";
 
-const URL = "/posts";
+const URL = "/postsByUser";
 
-export const getPhotos = (config) =>
-  makeRequest({
+export const getPostsByUser = (config) => {
+  config.url = `${URL}${config.url}`;
+
+  return makeRequest({
     method: "GET",
-    url: URL,
     ...config,
   });
+};
 
-export const mutatePhoto = (config) => {
+export const mutatePosts = (config) => {
   config.url = `${URL}${config.url}`;
 
   return makeRequest({

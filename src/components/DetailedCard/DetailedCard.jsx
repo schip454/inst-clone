@@ -4,6 +4,8 @@ import UserBadge from "../UserBadge/UserBadge";
 import { nanoid } from "nanoid";
 import cn from "classnames";
 import "./style.css";
+import PhotoModal from "../PhotoModal/PhotoModal";
+import TextArea from "../TextArea/TextArea";
 
 const DetailedCard = ({
   userName,
@@ -14,8 +16,21 @@ const DetailedCard = ({
   isLikedByYou,
   comments,
   className,
+  onLikeClick,
+  id,
+  onCommentSendClick,
+  mutateLoading,
 }) => {
   const [isCommentsShow, setIsCommentsShow] = useState(false);
+  const [comment, setComment] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleSendCommentClick = () => {
+    if (comment) {
+      onCommentSendClick(id, comment);
+      setComment("");
+    }
+  };
 
   const renderComments = () => {
     if (comments.length > 2 && !isCommentsShow) {
@@ -39,6 +54,17 @@ const DetailedCard = ({
 
     return comments.map((comment) => <Comment {...comment} key={nanoid()} />);
   };
+
+  const onCloseModal = () => {
+    setComment("");
+    setIsModalVisible(false);
+  };
+
+  const onOpenModal = () => {
+    setComment("");
+    setIsModalVisible(true);
+  };
+
   return (
     <div className={cn("cnDetailedCardRoot", className)}>
       <div className="cnDetailedCardHeader">
@@ -49,14 +75,41 @@ const DetailedCard = ({
       </div>
       <div className="cnDetailedCardButtons">
         <i
+          onClick={() => onLikeClick(id)}
           className={`${
             isLikedByYou ? "fas" : "far"
           } fa-heart cnDetailedCardLikeIcon`}></i>
-        <i className="fas fa-comment cnDetailedCardLikeComment" />
+        <i
+          className="fas fa-comment cnDetailedCardLikeComment"
+          onClick={onOpenModal}
+        />
       </div>
       <div className="cnDetailedCardLikes">{`Оценили ${likes} человек`}</div>
       <div className="cnDetailedCardComments">{renderComments()}</div>
-      <textarea className="cnDetailedCardTextArea"></textarea>
+      <TextArea
+        placeholder="Введите комментарий"
+        value={comment}
+        onChange={setComment}
+        isLoading={mutateLoading}
+        onSubmit={handleSendCommentClick}
+        buttonText="Отправить"
+      />
+
+      <PhotoModal
+        userName={userName}
+        avatarUrl={avatarUrl}
+        userId={userId}
+        isOpen={isModalVisible}
+        onClose={onCloseModal}
+        comments={comments}
+        commentValue={comment}
+        setCommentValue={setComment}
+        onCommentSubmit={handleSendCommentClick}
+        isCommentLoading={mutateLoading}
+        imgUrl={imgUrl}
+        isLikedByYou={isLikedByYou}
+        onLikeClick={() => onLikeClick(id)}
+      />
     </div>
   );
 };

@@ -1,7 +1,8 @@
 .cnDetailedCardRoot {
   display: flex;
   flex-direction: column;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   border: 1px solid #dbdbdb;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -58,4 +59,17 @@
   padding: 10px;
   outline: none;
   resize: none;
+  width: 80%;
+  box-sizing: border-box;
+}
+
+.cnDetailedCardTextAreaWrapper {
+  background-color: #fff;
+  position: relative;
+}
+
+.cnDetailedCardSendButton {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
