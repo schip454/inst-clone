@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import Comment from "../Comment/Comment";
 import TextArea from "../TextArea/TextArea";
 import { nanoid } from "nanoid";
+import ImageWithLoader from "../ImageWithLoader/ImageWithLoader";
 
 const PhotoModal = ({
   isOpen,
@@ -39,7 +40,7 @@ const PhotoModal = ({
       ariaHideApp={false}>
       <div className="cnModalRoot">
         <div className="cnModalImgWrapper">
-          <img src={imgUrl} alt="img" className="cnModalImg" />
+          <ImageWithLoader className="cnModalImg" src={imgUrl} alt="img" />
         </div>
         <div className="cnModalCommentsBlock">
           <div>

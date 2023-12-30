@@ -39,7 +39,7 @@ const MainRoutes = () => {
             <Route path={route.path} element={route.element} key={route.path} />
           ))
         ) : (
-          <Route path="/" element={<NoAccessPage />} />
+          <Route path="*" element={<NoAccessPage />} />
         )}
       </Routes>
     </BrowserRouter>

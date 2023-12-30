@@ -9,7 +9,8 @@ import "./style.css";
 
 const MainPage = () => {
   const photos = useSelector((state) => state.photos.photos);
-  const loading = useSelector((state) => state.photos.isPhotosLoading);
+  const isLoading = useSelector((state) => state.photos.isPhotosLoading);
+  const isError = useSelector((state) => state.photos.isPhotoError);
   const total = useSelector((state) => state.photos.totalPhotos);
   const authorizedUser = useSelector((state) => state.users.authorizedUser);
   const mutateLoading = useSelector((state) => state.photos.isMutateLoading);
@@ -41,11 +42,8 @@ const MainPage = () => {
       id={authorizedUser.id}
       avatarUrl={authorizedUser.avatarUrl}>
       <div className="cnMainPageRoot">
-        {loading ? (
-          <div className="cnMainLoaderContainer">
-            <Bars color="#0008ff" height={80} width={80} />
-          </div>
-        ) : (
+        {isLoading && <Bars color="#0008ff" height={15} width={15} />}
+        {!isError && !isLoading && (
           <InfiniteScroll
             dataLength={photos.length}
             next={nextHandler}

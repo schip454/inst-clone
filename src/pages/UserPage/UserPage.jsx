@@ -18,10 +18,12 @@ const UserPage = () => {
   const authorizedUser = useSelector((state) => state.users.authorizedUser);
   const user = useSelector((state) => state.users.user);
   const posts = useSelector((state) => state.postsByUser.posts);
+  const isPostsError = useSelector((state) => state.postsByUser.isPostsError);
   const isPostsLoading = useSelector(
     (state) => state.postsByUser.isPostsLoading
   );
   const isUserLoading = useSelector((state) => state.users.isUserLoading);
+  const isUserError = useSelector((state) => state.users.isUserError);
   const mutateLoading = useSelector((state) => state.photos.isMutateLoading);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -73,18 +75,20 @@ const UserPage = () => {
         </div>
       ) : (
         <div className="cnUserPageRoot">
-          <UserBio
-            avatarUrl={user.avatarUrl}
-            nickname={user.nickname}
-            subscribers={user.subscribers.length}
-            subscribed={user.subscribed.length}
-            firstName={user.firstName}
-            lastName={user.lastName}
-            description={user.description}
-            url={user.url}
-            isMyPage={id == authorizedUser.id}
-            isSubscribed={user.subscribers.includes(authorizedUser.id)}
-          />
+          {!isUserError && (
+            <UserBio
+              avatarUrl={user.avatarUrl}
+              nickname={user.nickname}
+              subscribers={user.subscribers.length}
+              subscribed={user.subscribed.length}
+              firstName={user.firstName}
+              lastName={user.lastName}
+              description={user.description}
+              url={user.url}
+              isMyPage={id == authorizedUser.id}
+              isSubscribed={user.subscribers.includes(authorizedUser.id)}
+            />
+          )}
           <div className="cnUserPageRootContent">
             {postsForRender.length ? (
               <InfiniteScroll
@@ -122,7 +126,9 @@ const UserPage = () => {
                 ))}
               </InfiniteScroll>
             ) : (
-              <p className="cnUserPageNoPosts">User don't have posts!</p>
+              !isPostsError && (
+                <p className="cnUserPageNoPosts">User don't have posts!</p>
+              )
             )}
           </div>
         </div>

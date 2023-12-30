@@ -6,6 +6,8 @@ import cn from "classnames";
 import "./style.css";
 import PhotoModal from "../PhotoModal/PhotoModal";
 import TextArea from "../TextArea/TextArea";
+import { Bars } from "react-loader-spinner";
+import ImageWithLoader from "../ImageWithLoader/ImageWithLoader";
 
 const DetailedCard = ({
   userName,
@@ -71,7 +73,7 @@ const DetailedCard = ({
         <UserBadge nickName={userName} avatarUrl={avatarUrl} id={userId} />
       </div>
       <div className="">
-        <img className="cnDetailedCardImg" src={imgUrl} alt="img" />
+        <ImageWithLoader className="cnDetailedCardImg" src={imgUrl} alt="img" />
       </div>
       <div className="cnDetailedCardButtons">
         <i
